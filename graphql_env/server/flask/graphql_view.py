@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 import json
 import six
+import logging
 from graphql.error import GraphQLError, format_error as default_format_error
 from graphql.execution import ExecutionResult
 from flask import jsonify, request
@@ -96,6 +97,7 @@ def graphql_view(execute,
     except Exception as error:
         if isinstance(error, GraphQLHTTPError):
             status = error.status_code
+        logging.exception("GraphQL Error")
         execution_result = ExecutionResult(errors=[error])
 
     if graphiql and can_display_graphiql(request):
