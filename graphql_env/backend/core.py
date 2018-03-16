@@ -1,6 +1,7 @@
 from graphql import execute, parse, validate, GraphQLError
 from graphql.execution import ExecutionResult
 from graphql.language import ast
+import logging
 
 from .base import GraphQLBackend, GraphQLDocument
 
@@ -64,4 +65,5 @@ class GraphQLCoreDocument(GraphQLDocument):
                 operation_name=operation_name,
                 **self.execute_params)
         except Exception as e:
+            logging.exception("GraphQL Error")
             return ExecutionResult(errors=[e])
